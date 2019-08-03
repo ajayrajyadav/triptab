@@ -13,7 +13,8 @@ class Trips extends Component {
             totalAmountPaid: 0,
             participantsOptions: [],
             participantOptionsPair: [],
-            participants: []
+            participants: [],
+            message: ""
         };
     }
 
@@ -39,7 +40,6 @@ class Trips extends Component {
     handleSubmit = (currentUser) => event => {
         event.preventDefault();
         console.log("in here")
-        // if(this.state.eventName !== "" && this.state.payerName !== "" &&  this.state.participants.length !== 0 && this.isParticipantsArrayEmpty){
         const eventToInsert = {
             userId: currentUser,
             payerId: this.state.payerName,
@@ -51,9 +51,16 @@ class Trips extends Component {
         console.log(eventToInsert);
         axios.post("/user/newEvent", eventToInsert).then(response => {
             console.log(response)
+            this.setState({
+                message : "Successfully updagted"
+            })
+            window.location.reload();
         })
-        // }
-
+        .catch(err => {
+            this.setState({
+                message: err
+            })
+        })
     }
 
     isParticipantsArrayEmpty = () => {
